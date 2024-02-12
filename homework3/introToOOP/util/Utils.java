@@ -1,4 +1,9 @@
-package homework3.introToOOP;
+package homework3.introToOOP.util;
+
+import homework3.introToOOP.builders.Flat;
+import homework3.introToOOP.builders.Floor;
+import homework3.introToOOP.builders.House;
+import homework3.introToOOP.builders.Room;
 
 import java.util.Random;
 

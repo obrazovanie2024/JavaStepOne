@@ -1,10 +1,10 @@
-package homework3.introToOOP;
+package homework3.introToOOP.builders;
 
 public class Flat {
-    private int flatNumber;
-    private Room[] rooms;
+    private final int flatNumber;
+    private final Room[] rooms;
 
-    Flat(int flatNumber, Room[] rooms) {
+     public Flat(int flatNumber, Room[] rooms) {
         this.flatNumber = flatNumber;
         this.rooms = rooms;
     }

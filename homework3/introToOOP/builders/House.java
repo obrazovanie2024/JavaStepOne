@@ -1,10 +1,10 @@
-package homework3.introToOOP;
+package homework3.introToOOP.builders;
 
 public class House {
-    private int houseNumber;
-    private Floor[] floors;
+    private final int houseNumber;
+    private final Floor[] floors;
 
-    House(int houseNumber, Floor[] floors) {
+     public House(int houseNumber, Floor[] floors) {
         this.houseNumber = houseNumber;
         this.floors = floors;
     }

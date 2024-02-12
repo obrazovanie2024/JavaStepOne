@@ -1,7 +1,7 @@
-package homework3.introToOOP;
+package homework3.introToOOP.builders;
 
 public class Room {
-    private boolean isPassage;
+    private final boolean isPassage;
 
     public Room(boolean isPassage) {
         this.isPassage = isPassage;
