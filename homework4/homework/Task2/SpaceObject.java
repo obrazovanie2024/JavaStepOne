@@ -4,6 +4,7 @@ public abstract class SpaceObject implements SpaceObjectInterface {
     private final String name;
     private final int mass;
     private final Colours colour;
+    private static final double pi = Math.PI;
 
     public SpaceObject(String name, int mass, Colours colour) {
         this.name = name;
@@ -13,6 +14,17 @@ public abstract class SpaceObject implements SpaceObjectInterface {
 
     public void printInfo() {
         System.out.println("Имя: " + this.getName() + ", " + "Цвет: " + this.getColour() + ", " + "Масса: " + this.getMass());
+    }
+
+    public String calculateDiameter(int circlePerimeter) {
+        double diameter = circlePerimeter / pi;
+        return this.name + " имеет диаметр " + diameter;
+    }
+
+    public String compareMass(SpaceObject spaceObject) {
+        return this.mass > spaceObject.getMass()
+                ? this.name + " тяжелее"
+                : spaceObject.getName() + " тяжелее";
     }
 
     public String getName() {
@@ -26,4 +38,5 @@ public abstract class SpaceObject implements SpaceObjectInterface {
     public Colours getColour() {
         return colour;
     }
+
 }

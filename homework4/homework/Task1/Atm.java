@@ -1,49 +1,48 @@
 package homework4.homework.Task1;
 
 public class Atm {
-    private int banknote10;
-    private int banknote20;
-    private int banknote50;
-    final private int YE10 = 10;
-    final private int YE20 = 20;
-    final private int YE50 = 50;
-    private char errorCode;
-    private int b10W;
-    private int b20W;
-    private int b50W;
+    private int numberOfBanknote10inAtm;
+    private int numberOfBanknote20inAtm;
+    private int numberOfBanknote50inAtm;
+    private static final int DENOMINATION_10 = 10;
+    private static final int DENOMINATION_20 = 20;
+    private static final int DENOMINATION_50 = 50;
+    private String errorCode;
+    private static final String NEGATIVE_NUMBER_ERROR = "На клавиатуре банкомата нет знака минус. Как вам это удалось?";
+    private static final String NOT_MULTIPLE_OF_50_20_10_ERROR = "В банкомате есть только банкноты номиналом 50, 20 и 10 евро. За мелочью идите в магазин к кассиру.";
+    private static final String REQUESTED_NOTHING_ERROR = "Если вам ничего не нужно, зачем подошли к банкомату?";
+    private static final String NO_ENOUGH_MONEY_IN_ATM_ERROR = "Денег нет, но вы держитесь.";
+    private static final String NOT_ENOUGH_CONCRETE_DENOMINATION_ERROR = "В банкомате не хватает банкнот нужного номинала.";
+    private int numberOfBanknote10toWithdraw;
+    private int numberOfBanknote20toWithdraw;
+    private int numberOfBanknote50toWithdraw;
 
     public Atm(int banknote10, int banknote20, int banknote50) {
-        this.banknote10 = banknote10;
-        this.banknote20 = banknote20;
-        this.banknote50 = banknote50;
+        this.numberOfBanknote10inAtm = banknote10;
+        this.numberOfBanknote20inAtm = banknote20;
+        this.numberOfBanknote50inAtm = banknote50;
     }
 
     public void addBanknote10(int banknote10) {
-        this.banknote10 = this.banknote10 + banknote10;
+        this.numberOfBanknote10inAtm = this.numberOfBanknote10inAtm + banknote10;
     }
 
     public void addBanknote20(int banknote20) {
-        this.banknote20 = this.banknote20 + banknote20;
+        this.numberOfBanknote20inAtm = this.numberOfBanknote20inAtm + banknote20;
     }
 
     public void addBanknote50(int banknote50) {
-        this.banknote50 = this.banknote50 + banknote50;
+        this.numberOfBanknote50inAtm = this.numberOfBanknote50inAtm + banknote50;
     }
 
     public void withdrawCash(int requiredAmount) {
 
         if (!isValid(requiredAmount)) {
-            switch (this.errorCode) {
-                case 'M' -> System.out.println("На клавиатуре банкомата нет знака минус. Как вам это удалось?");
-                case 'C' -> System.out.println("В банкомате есть только банкноты номиналом 50, 20 и 10 евро. За мелочью идите в магазин к кассиру.");
-                case 'Z' -> System.out.println("Если вам ничего не нужно, зачем подошли к банкомату?");
-                case 'W' -> System.out.println("Денег нет, но вы держитесь.");
-                case 'X' -> System.out.println("В банкомате не хватает банкнот нужного номинала.");
-            }
+            System.out.println(errorCode);
             return;
         }
 
-        printInfo(this.b50W, this.b20W, this.b10W);
+        printInfo(this.numberOfBanknote50toWithdraw, this.numberOfBanknote20toWithdraw, this.numberOfBanknote10toWithdraw);
 
     }
 
@@ -62,63 +61,63 @@ public class Atm {
 
     private boolean isValid(int requiredAmount) {
         if (requiredAmount < 0) {
-            this.errorCode = 'M';
+            this.errorCode = NEGATIVE_NUMBER_ERROR;
             return false;
         }
         if (!(requiredAmount % 50 == 0 || requiredAmount % 20 == 0 || requiredAmount % 10 == 0)) {
-            this.errorCode = 'C';
+            this.errorCode = NOT_MULTIPLE_OF_50_20_10_ERROR;
             return false;
         }
 
         if (requiredAmount == 0) {
-            this.errorCode = 'Z';
+            this.errorCode = REQUESTED_NOTHING_ERROR;
             return false;
         }
 
         if (requiredAmount > getRemainAmount()) {
-            this.errorCode = 'W';
+            this.errorCode = NO_ENOUGH_MONEY_IN_ATM_ERROR;
             return false;
         }
 
         int b50w = 0;
         int b20w = 0;
         int b10w = 0;
-        if (requiredAmount >= YE50) {
-            b50w = requiredAmount / YE50;
-            if (this.banknote50 / b50w == 0) {
-                int diff = b50w - this.banknote50;
-                requiredAmount = requiredAmount % YE50 + diff * YE50;
-                this.b50W = this.banknote50;
+        if (requiredAmount >= DENOMINATION_50) {
+            b50w = requiredAmount / DENOMINATION_50;
+            if (this.numberOfBanknote50inAtm / b50w == 0) {
+                int diff = b50w - this.numberOfBanknote50inAtm;
+                requiredAmount = requiredAmount % DENOMINATION_50 + diff * DENOMINATION_50;
+                this.numberOfBanknote50toWithdraw = this.numberOfBanknote50inAtm;
             } else {
-                requiredAmount %= YE50;
-                this.b50W = b50w;
+                requiredAmount %= DENOMINATION_50;
+                this.numberOfBanknote50toWithdraw = b50w;
             }
         }
-        if (requiredAmount >= YE20) {
-            b20w = requiredAmount / YE20;
-            if (this.banknote20 / b20w == 0) {
-                int diff = b20w - this.banknote20;
-                requiredAmount = requiredAmount % YE20 + diff * YE20;
-                this.b20W = this.banknote20;
+        if (requiredAmount >= DENOMINATION_20) {
+            b20w = requiredAmount / DENOMINATION_20;
+            if (this.numberOfBanknote20inAtm / b20w == 0) {
+                int diff = b20w - this.numberOfBanknote20inAtm;
+                requiredAmount = requiredAmount % DENOMINATION_20 + diff * DENOMINATION_20;
+                this.numberOfBanknote20toWithdraw = this.numberOfBanknote20inAtm;
             } else {
-                requiredAmount %= YE20;
-                this.b20W = b20w;
+                requiredAmount %= DENOMINATION_20;
+                this.numberOfBanknote20toWithdraw = b20w;
             }
         }
-        if (requiredAmount >= YE10) {
-            b10w = requiredAmount / YE10;
-            if (this.banknote10 / b10w == 0) {
-                int diff = b10w - this.banknote10;
-                this.b10W = this.banknote10;
-                requiredAmount = requiredAmount % YE10 + diff * YE10;
+        if (requiredAmount >= DENOMINATION_10) {
+            b10w = requiredAmount / DENOMINATION_10;
+            if (this.numberOfBanknote10inAtm / b10w == 0) {
+                int diff = b10w - this.numberOfBanknote10inAtm;
+                this.numberOfBanknote10toWithdraw = this.numberOfBanknote10inAtm;
+                requiredAmount = requiredAmount % DENOMINATION_10 + diff * DENOMINATION_10;
             } else {
-                requiredAmount %= YE10;
-                this.b10W = b10w;
+                requiredAmount %= DENOMINATION_10;
+                this.numberOfBanknote10toWithdraw = b10w;
             }
         }
 
         if (requiredAmount != 0) {
-            this.errorCode = 'X';
+            this.errorCode = NOT_ENOUGH_CONCRETE_DENOMINATION_ERROR;
             return false;
         }
 
@@ -126,7 +125,7 @@ public class Atm {
     }
 
     private int getRemainAmount() {
-        return this.banknote10 * YE10 + this.banknote20 * YE20 + this.banknote50 * YE50;
+        return this.numberOfBanknote10inAtm * DENOMINATION_10 + this.numberOfBanknote20inAtm * DENOMINATION_20 + this.numberOfBanknote50inAtm * DENOMINATION_50;
     }
 
 }
