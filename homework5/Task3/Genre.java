@@ -1,0 +1,9 @@
+package homework5.Task3;
+
+public enum Genre {
+    ACTION, ADVENTURE, ANIMATED,
+    COMEDY, DRAMA, FANTASY,
+    HISTORICAL, HORROR, MUSICAL,
+    NOIR, ROMANCE, SCIENCE_FICTION,
+    THRILLER, WESTERN
+}
