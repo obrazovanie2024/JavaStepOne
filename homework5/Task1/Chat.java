@@ -2,7 +2,7 @@ package homework5.Task1;
 
 final class Chat implements Comparable<Chat> {
     private final String chatName;
-    private final int membersNumber;
+    private int membersNumber;
 
     public Chat(String chatName, int membersNumber) {
         this.chatName = chatName;

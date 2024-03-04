@@ -4,6 +4,8 @@ import java.util.*;
 
 public final class ChatUtil {
 
+    private final static int THOUSAND_MEMBERS = 1000;
+
     private ChatUtil() {
 
     }
@@ -30,7 +32,7 @@ public final class ChatUtil {
 
     public static void removeChatsWhereLessThanThousandMembers (Map<String, Integer> map) {
         for (Iterator<Map.Entry<String, Integer>> iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
-            if (iterator.next().getValue() < 1000) {
+            if (iterator.next().getValue() < THOUSAND_MEMBERS) {
                 iterator.remove();
             }
         }
@@ -38,7 +40,7 @@ public final class ChatUtil {
 
     public static void removeChatsWhereLessThanThousandMembers2 (List<Chat> list) {
         for (Iterator<Chat> iterator = list.iterator(); iterator.hasNext(); ) {
-            if (iterator.next().getMembersNumber() < 1000) {
+            if (iterator.next().getMembersNumber() < THOUSAND_MEMBERS) {
                 iterator.remove();
             }
         }

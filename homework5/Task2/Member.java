@@ -3,7 +3,7 @@ package homework5.Task2;
 public class Member {
     private final int identifier;
     private final String name;
-    private final int age;
+    private int age;
 
     public Member(int identifier, String name, int age) {
         this.identifier = identifier;
