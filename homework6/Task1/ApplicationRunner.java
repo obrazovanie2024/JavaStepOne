@@ -31,7 +31,7 @@ public class ApplicationRunner {
                 new Student("Terminator", "Good", 3, List.of(5,5,5,4,4)),
                 new Student("Sarah", "Connor", 3, List.of(4,4,4,4,4,5,5,3)),
                 new Student("John", "Connor", 3, List.of(4,3,4,4,4,3,2)),
-                new Student("Terminator", "Bad", 3, List.of(5,5,5,4,4))
+                new Student("Terminator", "Bad", 3, List.of(5,5,5))
         );
 
         // средняя оценка студентов по курсам
@@ -48,27 +48,24 @@ public class ApplicationRunner {
                 .entrySet()
                 .forEach(System.out::println);
 
-        var sortedListOfStudentsFromSecondTask = students.stream()
-                .sorted(Comparator.comparing(Student::getGivenName).thenComparing(Student::getFamilyName))
-                .map(Student::shortStudent)
-                .toList();
-
         // сборная солянка aka третье задание
-        // не разобрался как сделать
-//        var mapThird = new HashMap<Integer, ListAndMark>();
-//        students.stream()
-//                .sorted(Comparator.comparing(Student::getGivenName).thenComparing(Student::getFamilyName))
-//                .map(student -> mapThird.)
-//                .collect(Collectors.groupingBy(Student::getCourse, Collectors.averagingDouble(Student::getAverageMark)));
-
-
-        // практика
-//        students.stream()
-//                .map(student -> new StudentShort(student.getGivenName(), student.getFamilyName()))
-//                .sorted(Comparator.comparing(StudentShort::getGivenName).thenComparing(StudentShort::getFamilyName))
-//                .forEach(System.out::println);
-
-
+        students.stream()
+                .sorted(Comparator.comparing(Student::getGivenName).thenComparing(Student::getFamilyName))
+                .collect(Collectors.groupingBy(Student::getCourse,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                studentsList -> {
+                                    List<StudentShort> studentShortList = studentsList.stream()
+                                            .map(Student::shortStudent)
+                                            .toList();
+                                    double averageMark = studentsList.stream()
+                                            .mapToDouble(Student::getAverageMark)
+                                            .average()
+                                            .orElse(0.0);
+                                    return new ListAndMark(studentShortList, averageMark);
+                                })))
+                .entrySet()
+                .forEach(System.out::println);
 
     }
 
